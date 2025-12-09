@@ -211,7 +211,7 @@ const CameraModel = () => {
 
   return (
     <group
-      position={[-1.45, 0.2, 0.2]}
+      position={[-1.25, 0.2, 0.5]}
       rotation={[0, 1.5, 0]}
       onClick={handleClick}
       onPointerOver={() => setHovered(true)}

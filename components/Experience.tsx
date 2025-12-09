@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Environment, ContactShadows, SpotLight as DreiSpotLight } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { SpotLight, Object3D } from 'three';
 import { CameraManager } from './CameraManager';
 import { Room } from './World/Room';
@@ -9,6 +9,11 @@ import { Paintings } from './World/Paintings';
 
 const MovingLight = () => {
   const lightRef = useRef<SpotLight>(null);
+  const { viewport } = useThree();
+  const isPortrait = viewport.width < viewport.height;
+
+  // Base intensity increased for mobile
+  const baseIntensity = isPortrait ? 80 : 20;
 
   useFrame(({ clock }) => {
     if (lightRef.current) {
@@ -17,8 +22,8 @@ const MovingLight = () => {
       lightRef.current.position.x = 5 + Math.sin(t * 0.5) * 2;
       lightRef.current.position.z = 5 + Math.cos(t * 0.3) * 1.5;
 
-      // Subtle "breathing" intensity to make the room feel alive/dreamlike
-      lightRef.current.intensity = 15 + Math.sin(t * 2) * 5;
+      // Subtle "breathing" intensity
+      lightRef.current.intensity = (baseIntensity - 5) + Math.sin(t * 2) * 5;
     }
   });
 
@@ -28,7 +33,7 @@ const MovingLight = () => {
       position={[5, 8, 5]}
       angle={0.4}
       penumbra={0.6}
-      intensity={20}
+      intensity={baseIntensity}
       castShadow
       color="#ffedd5"
       shadow-bias={-0.0001}
@@ -38,7 +43,15 @@ const MovingLight = () => {
 };
 
 export const Experience: React.FC = () => {
-  const deskTarget = useRef<Object3D>(null);
+  const { viewport } = useThree();
+  const isPortrait = viewport.width < viewport.height;
+
+  // Lighting multipliers for mobile readability
+  // Lighting multipliers for mobile readability - DRASTICALLY INCREASED
+  const envIntensity = isPortrait ? 1.0 : 0.2;
+  const ambientIntensity = isPortrait ? 2.0 : 0.4;
+  const fillIntensity = isPortrait ? 3.0 : 0.5;
+  const mainSpotIntensity = isPortrait ? 200 : 60;
 
   return (
     <>
@@ -50,9 +63,9 @@ export const Experience: React.FC = () => {
       <CameraManager />
 
       {/* Lighting */}
-      <Environment preset="city" environmentIntensity={0.2} />
-      <ambientLight intensity={0.4} color="#4a4060" /> {/* Very dim cool ambient */}
-      <pointLight position={[-3, 4, 4]} intensity={0.5} color="#b85c38" distance={8} /> {/* Warm fill */}
+      <Environment preset="city" environmentIntensity={envIntensity} />
+      <ambientLight intensity={ambientIntensity} color="#4a4060" /> {/* Very dim cool ambient */}
+      <pointLight position={[-3, 4, 4]} intensity={fillIntensity} color="#b85c38" distance={8} /> {/* Warm fill */}
 
       {/* Main Table Spotlight - High contrast, focused */}
       <spotLight
@@ -60,7 +73,7 @@ export const Experience: React.FC = () => {
         target-position={[0, 0, 0]}
         angle={0.3}
         penumbra={0.4}
-        intensity={60}
+        intensity={mainSpotIntensity}
         castShadow
         color="#fff5e6"
         shadow-bias={-0.0001}
