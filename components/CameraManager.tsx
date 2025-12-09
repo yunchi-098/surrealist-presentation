@@ -11,7 +11,7 @@ export const CameraManager: React.FC = () => {
   const { width, height } = viewport;
   const isPortrait = width < height;
 
-  const { viewMode, focusTarget, setViewMode } = useStore();
+  const { viewMode, focusTarget, setViewMode, lookOffset, setLookOffset } = useStore();
 
   // We keep a mutable reference to the target lookAt point
   const targetRef = useRef(new Vector3(0, 1.5, 0));
@@ -19,6 +19,9 @@ export const CameraManager: React.FC = () => {
   // Handle Animations based on ViewMode
   useEffect(() => {
     const timeline = gsap.timeline({ defaults: { duration: 1.5, ease: 'power3.inOut' } });
+
+    // Reset look offset when changing views
+    setLookOffset(0);
 
     if (viewMode === ViewMode.WALL || viewMode === ViewMode.WALL_NO_TITLE) {
       // Wall View
@@ -65,11 +68,14 @@ export const CameraManager: React.FC = () => {
     return () => {
       timeline.kill();
     };
-  }, [viewMode, focusTarget, camera, isPortrait]);
+  }, [viewMode, focusTarget, camera, isPortrait, setLookOffset]);
 
   // Update camera to look at the animated target every frame
   useFrame(() => {
-    camera.lookAt(targetRef.current);
+    // Apply the offset to the current animated target
+    const targetWithOffset = targetRef.current.clone();
+    targetWithOffset.x += lookOffset;
+    camera.lookAt(targetWithOffset);
   });
 
   return null;

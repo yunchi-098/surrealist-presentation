@@ -8,6 +8,8 @@ interface StoreContextType {
   setFocusTarget: (target: FocusTarget | null) => void;
   focusedItemName: string | null;
   setFocusedItemName: (name: string | null) => void;
+  lookOffset: number;
+  setLookOffset: (offset: number) => void;
 }
 
 // Export the context object itself for bridging
@@ -17,6 +19,7 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.WALL);
   const [focusTarget, setFocusTarget] = useState<FocusTarget | null>(null);
   const [focusedItemName, setFocusedItemName] = useState<string | null>(null);
+  const [lookOffset, setLookOffset] = useState<number>(0);
 
   return (
     <StoreContext.Provider
@@ -27,6 +30,8 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         setFocusTarget,
         focusedItemName,
         setFocusedItemName,
+        lookOffset,
+        setLookOffset,
       }}
     >
       {children}

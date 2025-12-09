@@ -5,7 +5,7 @@ import { Experience } from './components/Experience';
 import { ViewMode } from './types';
 
 const UIOverlay = () => {
-  const { viewMode, setViewMode, focusedItemName, setFocusTarget, setFocusedItemName } = useStore();
+  const { viewMode, setViewMode, focusedItemName, setFocusTarget, setFocusedItemName, lookOffset, setLookOffset } = useStore();
 
   const handleBack = () => {
     if (viewMode === ViewMode.FOCUS) {
@@ -59,7 +59,35 @@ const UIOverlay = () => {
 
       {/* Header - Empty placeholder to keep structure if needed, or removed */}
       <header className="flex justify-between items-start pointer-events-auto">
-        {/* Could put a small logo here when in Desk View if desired, leaving empty for now as requested */}
+        {/* Mobile Back Button - Top Left */}
+        {viewMode !== ViewMode.WALL && viewMode !== ViewMode.WALL_NO_TITLE && (
+          <button
+            onClick={handleBack}
+            className="md:hidden px-4 py-2 text-sm border border-amber-100/30 text-amber-50 rounded-full backdrop-blur-sm hover:bg-amber-100/10 transition-all font-serif flex items-center gap-2"
+          >
+            ← Back
+          </button>
+        )}
+
+        {/* Mobile Look Controls - Top Right */}
+        <div className="md:hidden flex gap-2">
+          {viewMode !== ViewMode.WALL && viewMode !== ViewMode.WALL_NO_TITLE && (
+            <>
+              <button
+                onClick={() => setLookOffset(lookOffset - 0.5)}
+                className="px-3 py-2 text-sm border border-amber-100/30 text-amber-50 rounded-full backdrop-blur-sm hover:bg-amber-100/10 transition-all font-serif"
+              >
+                ← Look
+              </button>
+              <button
+                onClick={() => setLookOffset(lookOffset + 0.5)}
+                className="px-3 py-2 text-sm border border-amber-100/30 text-amber-50 rounded-full backdrop-blur-sm hover:bg-amber-100/10 transition-all font-serif"
+              >
+                Look →
+              </button>
+            </>
+          )}
+        </div>
       </header>
 
       {/* Footer / Controls */}
