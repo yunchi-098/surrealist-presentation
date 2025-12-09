@@ -413,7 +413,7 @@ export const Desk: React.FC = () => {
           title="Preview"
           coverFontSize={0.1}
           color="#004225"
-          position={[-0.8, -0.02, 0.6]}
+          position={[-0.6, -0.02, 0.6]}
           rotation={[0, 0.25, 0]}
           scale={0.6}
           pages={[
