@@ -7,7 +7,10 @@ import { useStore } from '../context/StoreContext';
 import { ViewMode } from '../types';
 
 export const CameraManager: React.FC = () => {
-  const { camera } = useThree();
+  const { camera, viewport } = useThree();
+  const { width, height } = viewport;
+  const isPortrait = width < height;
+
   const { viewMode, focusTarget, setViewMode } = useStore();
 
   // We keep a mutable reference to the target lookAt point
@@ -18,42 +21,42 @@ export const CameraManager: React.FC = () => {
     const timeline = gsap.timeline({ defaults: { duration: 1.5, ease: 'power3.inOut' } });
 
     if (viewMode === ViewMode.WALL || viewMode === ViewMode.WALL_NO_TITLE) {
-      // Wall View: Wide shot facing the paintings
-      // Kept at 10 (Static/Fixed as requested)
+      // Wall View
       timeline.to(camera.position, {
         x: 0,
         y: 1.6,
-        z: 10,
+        z: isPortrait ? 16 : 10, // Move back on mobile to see more
       });
       timeline.to(targetRef.current, {
         x: 0,
         y: 1.6,
-        z: 0, // Looking at the wall
+        z: 0,
       }, "<");
     } else if (viewMode === ViewMode.DESK) {
-      // Desk View: Front angle
-      // MOVED CLOSER: z from 9 -> 6.5, y from 7.5 -> 6.0
+      // Desk View
       timeline.to(camera.position, {
         x: 0,
-        y: 6.0,
-        z: 6.5,
+        y: isPortrait ? 8.0 : 6.0, // Higher and further back on mobile
+        z: isPortrait ? 10.0 : 6.5,
       });
       timeline.to(targetRef.current, {
         x: 0,
-        y: 1.48, // Look at desk items
-        z: 0.4, // Center view on the book cluster
+        y: 1.48,
+        z: 0.4,
       }, "<");
     } else if (viewMode === ViewMode.FOCUS && focusTarget) {
-      // Focus View: Close up on specific object
+      // Focus View
+      const mobileOffsetMultiplier = isPortrait ? 1.5 : 1;
+
       timeline.to(camera.position, {
-        x: focusTarget.position.x + focusTarget.offset.x,
-        y: focusTarget.position.y + focusTarget.offset.y - 1.3, // Reverted: Restore magic number
-        z: focusTarget.position.z + focusTarget.offset.z,
+        x: focusTarget.position.x + focusTarget.offset.x * mobileOffsetMultiplier,
+        y: focusTarget.position.y + focusTarget.offset.y * mobileOffsetMultiplier - 1.3,
+        z: focusTarget.position.z + focusTarget.offset.z * mobileOffsetMultiplier,
         duration: 1.2
       });
       timeline.to(targetRef.current, {
         x: focusTarget.target.x,
-        y: focusTarget.target.y - 1, // Reverted: Restore magic number
+        y: focusTarget.target.y - 1,
         z: focusTarget.target.z,
         duration: 1.2
       }, "<");
@@ -62,7 +65,7 @@ export const CameraManager: React.FC = () => {
     return () => {
       timeline.kill();
     };
-  }, [viewMode, focusTarget, camera]);
+  }, [viewMode, focusTarget, camera, isPortrait]);
 
   // Update camera to look at the animated target every frame
   useFrame(() => {

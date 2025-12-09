@@ -30,7 +30,7 @@ const UIOverlay = () => {
   const isTransitionMode = viewMode === ViewMode.WALL || viewMode === ViewMode.WALL_NO_TITLE;
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-8">
+    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-4 md:p-8">
 
       {/* Click Handler Layer for Wall Modes */}
       {isTransitionMode && (
@@ -44,14 +44,14 @@ const UIOverlay = () => {
       <div
         className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-1000 ${showTitle ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="text-center bg-black/30 p-12 rounded-3xl backdrop-blur-sm border border-white/5">
-          <h1 className="text-6xl md:text-9xl text-amber-50 font-serif tracking-tighter mix-blend-difference opacity-90 mb-4">
+        <div className="text-center bg-black/30 p-6 md:p-12 rounded-3xl backdrop-blur-sm border border-white/5 mx-4">
+          <h1 className="text-4xl md:text-9xl text-amber-50 font-serif tracking-tighter mix-blend-difference opacity-90 mb-4">
             The Madness of Humanity
           </h1>
-          <h2 className="text-2xl md:text-4xl text-amber-200/80 font-serif italic">
+          <h2 className="text-lg md:text-4xl text-amber-200/80 font-serif italic">
             Introduction to Surrealism
           </h2>
-          <div className="mt-8 text-amber-100/60 font-sans text-sm animate-pulse">
+          <div className="mt-8 text-amber-100/60 font-sans text-xs md:text-sm animate-pulse">
             Click to Enter
           </div>
         </div>
@@ -68,14 +68,14 @@ const UIOverlay = () => {
           {viewMode !== ViewMode.WALL && viewMode !== ViewMode.WALL_NO_TITLE && (
             <button
               onClick={handleBack}
-              className="px-6 py-2 border border-amber-100/30 text-amber-50 rounded-full backdrop-blur-sm hover:bg-amber-100/10 transition-all font-serif"
+              className="px-4 py-2 md:px-6 md:py-2 text-sm md:text-base border border-amber-100/30 text-amber-50 rounded-full backdrop-blur-sm hover:bg-amber-100/10 transition-all font-serif"
             >
               ← Back
             </button>
           )}
         </div>
 
-        <div className="text-right text-amber-100/50 text-sm font-sans max-w-xs">
+        <div className="text-right text-amber-100/50 text-xs md:text-sm font-sans max-w-[200px] md:max-w-xs">
           {viewMode === ViewMode.DESK && <p>Select an object or book to examine closely.</p>}
           {viewMode === ViewMode.FOCUS && <p>Click back to return to the desk.</p>}
         </div>
