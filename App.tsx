@@ -46,10 +46,10 @@ const UIOverlay = () => {
       >
         <div className="text-center bg-black/30 p-12 rounded-3xl backdrop-blur-sm border border-white/5">
           <h1 className="text-6xl md:text-9xl text-amber-50 font-serif tracking-tighter mix-blend-difference opacity-90 mb-4">
-            Surrealist
+            The Madness of Humanity
           </h1>
           <h2 className="text-2xl md:text-4xl text-amber-200/80 font-serif italic">
-            The Dream Logic
+            Introduction to Surrealism
           </h2>
           <div className="mt-8 text-amber-100/60 font-sans text-sm animate-pulse">
             Click to Enter
