@@ -74,14 +74,16 @@ const UIOverlay = () => {
           {viewMode !== ViewMode.WALL && viewMode !== ViewMode.WALL_NO_TITLE && (
             <>
               <button
-                onClick={() => setLookOffset(lookOffset - 0.5)}
-                className="px-3 py-2 text-sm border border-amber-100/30 text-amber-50 rounded-full backdrop-blur-sm hover:bg-amber-100/10 transition-all font-serif"
+                onClick={() => setLookOffset(Math.max(lookOffset - 0.5, -0.5))}
+                disabled={lookOffset <= -0.5}
+                className={`px-3 py-2 text-sm border border-amber-100/30 text-amber-50 rounded-full backdrop-blur-sm transition-all font-serif ${lookOffset <= -0.5 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-amber-100/10'}`}
               >
                 ← Look
               </button>
               <button
-                onClick={() => setLookOffset(lookOffset + 0.5)}
-                className="px-3 py-2 text-sm border border-amber-100/30 text-amber-50 rounded-full backdrop-blur-sm hover:bg-amber-100/10 transition-all font-serif"
+                onClick={() => setLookOffset(Math.min(lookOffset + 0.5, 0.5))}
+                disabled={lookOffset >= 0.5}
+                className={`px-3 py-2 text-sm border border-amber-100/30 text-amber-50 rounded-full backdrop-blur-sm transition-all font-serif ${lookOffset >= 0.5 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-amber-100/10'}`}
               >
                 Look →
               </button>
