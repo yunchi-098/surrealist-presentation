@@ -442,7 +442,7 @@ Irreality`,
           id="book2"
           title="In Literature"
           color="#8b0000"
-          position={[0.1, -0.02, 0.55]}
+          position={[0.1, -0.02, 0.2]}
           rotation={[0, 0.08, 0]}
           scale={0.6}
           titleOffset={[0.05, 0, 0]}
