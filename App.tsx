@@ -1,4 +1,4 @@
-import React, { Suspense, useContext } from 'react';
+import React, { Suspense, useContext, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { StoreProvider, useStore, StoreContext } from './context/StoreContext';
 import { Experience } from './components/Experience';
@@ -16,6 +16,19 @@ const UIOverlay = () => {
       setViewMode(ViewMode.WALL);
     }
   };
+
+  // Handle Right Click for Back
+  useEffect(() => {
+    const handleRightClick = (e: MouseEvent) => {
+      e.preventDefault(); // Prevent default browser context menu
+      handleBack();
+    };
+
+    window.addEventListener('contextmenu', handleRightClick);
+    return () => {
+      window.removeEventListener('contextmenu', handleRightClick);
+    };
+  }, [handleBack]);
 
   const handleScreenClick = () => {
     if (viewMode === ViewMode.WALL) {
