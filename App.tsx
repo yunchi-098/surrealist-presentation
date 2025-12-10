@@ -98,7 +98,7 @@ const UIOverlay = () => {
           {viewMode !== ViewMode.WALL && viewMode !== ViewMode.WALL_NO_TITLE && (
             <button
               onClick={handleBack}
-              className="px-4 py-2 md:px-6 md:py-2 text-sm md:text-base border border-amber-100/30 text-amber-50 rounded-full backdrop-blur-sm hover:bg-amber-100/10 transition-all font-serif"
+              className="px-4 py-2 md:px-12 md:py-4 text-sm md:text-base border border-amber-100/30 text-amber-50 rounded-full backdrop-blur-sm hover:bg-amber-100/10 transition-all font-serif"
             >
               ← Back
             </button>
