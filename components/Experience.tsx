@@ -34,10 +34,7 @@ const MovingLight = () => {
       angle={0.4}
       penumbra={0.6}
       intensity={baseIntensity}
-      castShadow
       color="#ffedd5"
-      shadow-bias={-0.0001}
-      shadow-mapSize={[1024, 1024]}
     />
   );
 };
@@ -88,8 +85,9 @@ export const Experience: React.FC = () => {
         <Desk />
       </group>
 
-      {/* Ground Shadows */}
+      {/* Ground Shadows - Baked once for performance */}
       <ContactShadows
+        frames={1}
         resolution={1024}
         scale={20}
         blur={2.5}
