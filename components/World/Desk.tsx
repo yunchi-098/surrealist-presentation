@@ -485,8 +485,4 @@ Irreality`,
   );
 };
 
-// --- Preload Assets ---
-useGLTF.preload('https://yunchi-098.github.io/3d-assets/desk.glb');
-useGLTF.preload('https://yunchi-098.github.io/3d-assets/cam.glb');
-useGLTF.preload('https://yunchi-098.github.io/3d-assets/film_reel.glb');
-useGLTF.preload('https://yunchi-098.github.io/3d-assets/gram.glb?v=4');
+

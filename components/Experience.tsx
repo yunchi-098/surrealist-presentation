@@ -88,7 +88,7 @@ export const Experience: React.FC = () => {
       {/* Ground Shadows - Baked once for performance */}
       <ContactShadows
         frames={1}
-        resolution={1024}
+        resolution={512}
         scale={20}
         blur={2.5}
         opacity={0.5}
