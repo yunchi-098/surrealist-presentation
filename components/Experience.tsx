@@ -43,8 +43,7 @@ export const Experience: React.FC = () => {
   const { viewport } = useThree();
   const isPortrait = viewport.width < viewport.height;
 
-  // Lighting multipliers for mobile readability
-  // Lighting multipliers for mobile readability - DRASTICALLY INCREASED
+  // Lighting multipliers for mobile readabilitytam
   const envIntensity = isPortrait ? 1.0 : 0.2;
   const ambientIntensity = isPortrait ? 2.0 : 0.4;
   const fillIntensity = isPortrait ? 3.0 : 0.5;

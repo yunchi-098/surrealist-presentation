@@ -169,12 +169,12 @@ const App: React.FC = () => {
 
         <Canvas
           shadows
-          dpr={[1, 2]}
+          dpr={[1, 1.5]}
           // Decreased FOV to 20 for extreme cinematic/telephoto look
           camera={{ position: [0, 1.5, 9], fov: 20 }}
           gl={{
-            preserveDrawingBuffer: true,
-            antialias: true
+            preserveDrawingBuffer: false,
+            antialias: false
           }}
         >
           <Suspense fallback={null}>
